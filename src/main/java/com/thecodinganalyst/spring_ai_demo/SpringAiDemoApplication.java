@@ -19,8 +19,26 @@ public class SpringAiDemoApplication {
 	public CommandLineRunner runner(ChatClient.Builder builder) {
 		return args -> {
 			ChatClient chatClient = builder.build();
-			String response = chatClient.prompt("Tell me a joke").call().content();
-			System.out.println(response);
+
+			long start = System.nanoTime();
+
+			System.out.println("Calling Gemini...");
+
+			try {
+				String response = chatClient.prompt()
+						.user("Tell me a joke")
+						.call()
+						.content();
+
+				System.out.println("Response: " + response);
+			} finally {
+				long elapsedMs =
+						(System.nanoTime() - start) / 1_000_000;
+
+				System.out.println(
+						"Gemini call duration: " + elapsedMs + " ms"
+				);
+			}
 		};
 	}
 
