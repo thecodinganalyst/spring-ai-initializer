@@ -24,7 +24,7 @@ hs_err_pid*
 replay_pid*
 
 # Env files
-.env
+local.env
 *.env
 
 /.gradle/
