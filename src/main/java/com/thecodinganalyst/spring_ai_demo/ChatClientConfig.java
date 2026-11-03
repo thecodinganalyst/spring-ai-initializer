@@ -2,6 +2,7 @@ package com.thecodinganalyst.spring_ai_demo;
 
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.ToolCallingAdvisor;
 import org.springframework.ai.chat.client.advisor.observation.AdvisorObservationConvention;
 import org.springframework.ai.chat.client.observation.ChatClientObservationConvention;
@@ -57,7 +58,9 @@ public class ChatClientConfig {
                 toolAdvisor.getIfAvailable()
         );
 
-        return configurer.configure(builder).build();
+        return configurer.configure(builder)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
     }
 
 }
