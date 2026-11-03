@@ -1,5 +1,6 @@
 package com.thecodinganalyst.spring_ai_demo;
 
+import com.thecodinganalyst.spring_ai_demo.samples.DateAdvisory;
 import com.thecodinganalyst.spring_ai_demo.samples.EntityReturn;
 import com.thecodinganalyst.spring_ai_demo.samples.TellJoke;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,7 @@ public class AiConsole {
         log.info("1. Tell a joke");
         log.info("2. Test entity return");
         log.info("3. Test multiple entity returns");
+        log.info("4. Get tomorrow's date in Wonderland");
         log.info("m. Choose another model");
         log.info("x. Exit");
         log.info("Enter 1, 2, 3, m or x");
@@ -63,6 +65,10 @@ public class AiConsole {
             case "3" -> {
                 List<EntityReturn.ActorFilm> actorFilmList = EntityReturn.getMany(selectedChatClient);
                 actorFilmList.forEach(actorFilm -> log.info(actorFilm.toString()));
+                yield false;
+            }
+            case "4" -> {
+                log.info(DateAdvisory.get(selectedChatClient));
                 yield false;
             }
             case "m", "M" -> {
