@@ -1,5 +1,6 @@
 package com.thecodinganalyst.spring_ai_demo;
 
+import com.thecodinganalyst.spring_ai_demo.samples.EntityReturn;
 import com.thecodinganalyst.spring_ai_demo.samples.TellJoke;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -8,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -43,13 +45,24 @@ public class AiConsole {
     private boolean chooseWork(Scanner scanner){
         log.info("What do you want to do?");
         log.info("1. Tell a joke");
+        log.info("2. Test entity return");
+        log.info("3. Test multiple entity returns");
         log.info("m. Choose another model");
         log.info("x. Exit");
-        log.info("Enter 1, m or x");
+        log.info("Enter 1, 2, 3, m or x");
         String choice = scanner.nextLine();
         return switch (choice) {
             case "1" -> {
                 log.info(TellJoke.get(selectedChatClient));
+                yield false;
+            }
+            case "2" -> {
+                log.info(EntityReturn.get(selectedChatClient).toString());
+                yield false;
+            }
+            case "3" -> {
+                List<EntityReturn.ActorFilm> actorFilmList = EntityReturn.getMany(selectedChatClient);
+                actorFilmList.forEach(actorFilm -> log.info(actorFilm.toString()));
                 yield false;
             }
             case "m", "M" -> {
